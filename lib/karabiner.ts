@@ -118,8 +118,7 @@ export type Key =
     | "keypad_9"
     | "keypad_period"
     | "keypad_hyphen"
-    | "keypad_plus"
-
+    | "keypad_plus";
 
 export interface KeyPressFrom {
     key_code: Key;
@@ -159,7 +158,7 @@ export interface DeviceCondition {
     identifiers: {
         vendor_id?: number;
         product_id?: number;
-        location_id?: boolean;
+        location_id?: number;
         is_keyboard?: boolean;
         is_pointing_device?: boolean;
     }[];
@@ -484,8 +483,8 @@ export class HyperKey {
                             key_code: bin.key,
                             modifiers: {
                                 ...this.config.from.modifiers,
-                                optional: ["any"]
-                            }
+                                optional: ["any"],
+                            },
                         },
                         conditions: [
                             this.virtualModifier.getCondition(),
