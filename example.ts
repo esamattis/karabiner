@@ -353,7 +353,7 @@ hyper2
         description: "open angle bracket",
         key: "c",
         to: {
-            key_code: "grave_accent_and_tilde",
+            key_code: "non_us_backslash",
         },
     })
     .alt(WhenRDS, {
@@ -369,7 +369,7 @@ hyper2
         description: "close angle bracket",
         key: "v",
         to: {
-            key_code: "grave_accent_and_tilde",
+            key_code: "non_us_backslash",
             modifiers: ["left_shift"],
         },
     })
