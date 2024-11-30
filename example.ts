@@ -45,9 +45,10 @@ const WhenChrome: AltCondition = {
 
 const hyper1 = new HyperKey({
     id: "hyper1",
-    description: "Caps Lock",
+    description: "Left option to hyper1",
     from: {
-        key_code: "caps_lock",
+        // apple_vendor_top_case_key_code: "keyboard_fn",
+        key_code: "left_option",
     },
 });
 
@@ -155,12 +156,13 @@ hyper1.bindKey({
 });
 
 hyper1.bindKey({
-    symbol: "esc",
-    description: "Esc",
+    symbol: "_",
+    description: "underscore",
     key: "j",
     to: [
         {
-            key_code: "escape",
+            key_code: "slash",
+            modifiers: ["left_shift"],
         },
     ],
 });
@@ -216,20 +218,11 @@ hyper1.bindKey({
 });
 
 hyper1.bindKey({
-    description: "4 spaces",
+    description: "backspace",
     key: "spacebar",
     to: [
         {
-            key_code: "spacebar",
-        },
-        {
-            key_code: "spacebar",
-        },
-        {
-            key_code: "spacebar",
-        },
-        {
-            key_code: "spacebar",
+            key_code: "delete_or_backspace",
         },
     ],
 });
@@ -563,17 +556,17 @@ mods.addRule({
     ],
 });
 
-mods.addRule({
-    description: "Disable quote button (too close to enter)",
-    manipulators: [
-        {
-            type: "basic",
-            from: {
-                key_code: "non_us_pound",
-            },
-        },
-    ],
-});
+// mods.addRule({
+//     description: "Disable quote button (too close to enter)",
+//     manipulators: [
+//         {
+//             type: "basic",
+//             from: {
+//                 key_code: "non_us_pound",
+//             },
+//         },
+//     ],
+// });
 
 mods.addRule({
     description: "Disable insert",
@@ -716,25 +709,25 @@ mods.addRule({
     ],
 });
 
-mods.addRule({
-    description: "Turn section key to escape",
-    manipulators: [
-        {
-            type: "basic",
-            from: {
-                key_code: "non_us_backslash",
-                modifiers: {
-                    optional: ["any"],
-                },
-            },
-            to: [
-                {
-                    key_code: "escape",
-                },
-            ],
-        },
-    ],
-});
+// mods.addRule({
+//     description: "Turn section key to escape",
+//     manipulators: [
+//         {
+//             type: "basic",
+//             from: {
+//                 key_code: "non_us_backslash",
+//                 modifiers: {
+//                     optional: ["any"],
+//                 },
+//             },
+//             to: [
+//                 {
+//                     key_code: "escape",
+//                 },
+//             ],
+//         },
+//     ],
+// });
 
 const UNMUTE: KeyPressTo = {
     shell_command: `osascript -e 'display notification "🔊 🔴 UNMUTED" sound name "pop"' -e 'delay 0.25' -e 'set volume input volume 70'`,
@@ -780,35 +773,30 @@ mods.addRule({
     ],
 });
 
-hyper3.bindKey({
-    symbol: `m`,
-    description: "Mute",
-    key: "m",
-    to: MUTE,
-});
+// hyper3.bindKey({
+//     symbol: `m`,
+//     description: "Mute",
+//     key: "m",
+//     to: MUTE,
+// });
 
-hyper3.bindKey({
-    symbol: `u`,
-    description: "Unmute",
-    key: "u",
-    to: UNMUTE,
-});
+// hyper3.bindKey({
+//     symbol: `u`,
+//     description: "Unmute",
+//     key: "u",
+//     to: UNMUTE,
+// });
 
-hyper3.bindKey({
-    symbol: `b`,
-    description: "Toggle nightlight",
-    key: "b",
-    to: {
-        shell_command: `/usr/local/bin/nightlight toggle && osascript -e 'display notification "Nightlight!" sound name "frog"'`,
-    },
-});
+// hyper3.bindKey({
+//     symbol: `b`,
+//     description: "Toggle nightlight",
+//     key: "b",
+//     to: {
+//         shell_command: `/usr/local/bin/nightlight toggle && osascript -e 'display notification "Nightlight!" sound name "frog"'`,
+//     },
+// });
 
-const SUPER_MOD: Key[] = [
-    "right_alt",
-    "right_command",
-    "right_option",
-    "right_shift",
-];
+const SUPER_MOD: Key[] = ["left_control", "left_command", "left_option"];
 
 hyper3.bindKey({
     symbol: `1pw`,
@@ -850,36 +838,71 @@ hyper3.bindKey({
     },
 });
 
-hyper3.bindKey({
-    symbol: "Voice Over",
-    description: "Toggle Voice Over",
-    key: "v",
-    to: {
-        key_code: "v",
-        modifiers: SUPER_MOD,
-    },
-});
+// hyper3.bindKey({
+//     symbol: "Voice Over",
+//     description: "Toggle Voice Over",
+//     key: "v",
+//     to: {
+//         key_code: "v",
+//         modifiers: SUPER_MOD,
+//     },
+// });
 
 mods.addRule(hyper1.getRules());
 mods.addRule(hyper2.getRules());
 mods.addRule(hyper3.getRules());
 
-// mods.addRule({
-//     description: "Map Caps Lock to Escape",
-//     manipulators: [
-//         {
-//             type: "basic",
-//             from: {
-//                 key_code: "caps_lock",
-//             },
-//             to: [
-//                 {
-//                     key_code: "escape",
-//                 },
-//             ],
-//         },
-//     ],
-// });
+mods.addRule({
+    description: "fn to left option",
+    manipulators: [
+        {
+            type: "basic",
+            from: {
+                // key_code: "caps_lock",
+                apple_vendor_top_case_key_code: "keyboard_fn",
+            },
+            to: [
+                {
+                    key_code: "left_option",
+                },
+            ],
+        },
+    ],
+});
+
+mods.addRule({
+    description: "control to left option",
+    manipulators: [
+        {
+            type: "basic",
+            from: {
+                key_code: "left_control",
+            },
+            to: [
+                {
+                    key_code: "left_option",
+                },
+            ],
+        },
+    ],
+});
+
+mods.addRule({
+    description: "Map Caps Lock to control",
+    manipulators: [
+        {
+            type: "basic",
+            from: {
+                key_code: "caps_lock",
+            },
+            to: [
+                {
+                    key_code: "left_control",
+                },
+            ],
+        },
+    ],
+});
 
 if (Deno.env.get("GH_PAGES")) {
     writeHyperKeyImage({
