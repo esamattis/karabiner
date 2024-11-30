@@ -121,7 +121,8 @@ export type Key =
     | "keypad_plus";
 
 export interface KeyPressFrom {
-    key_code: Key;
+    key_code?: Key;
+    apple_vendor_top_case_key_code?: "keyboard_fn";
     modifiers?: {
         mandatory?: Key[];
         optional?: (Key | "any")[];
