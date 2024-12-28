@@ -184,7 +184,7 @@ hyper1.bindKey({
 hyper1.bindKey({
     symbol: "#",
     description: "hash",
-    key: "p",
+    key: "u",
     to: {
         key_code: "3",
         modifiers: ["left_shift"],
@@ -258,6 +258,16 @@ hyper2.bindKey({
     },
 });
 
+// Does not work with command modifiers
+// hyper1.bindKey({
+//     symbol: "+",
+//     description: "plus",
+//     key: "slash",
+//     to: {
+//         key_code: "hyphen",
+//     },
+// });
+
 hyper2.bindKey({
     symbol: `\\`,
     description: "back slash",
@@ -291,7 +301,7 @@ hyper1.bindKey({
 hyper1.bindKey({
     symbol: "$",
     description: "pound",
-    key: "u",
+    key: "p",
     to: {
         key_code: "4",
         modifiers: ["right_option"],
@@ -653,6 +663,23 @@ mods.addRule({
             from: {
                 key_code: "close_bracket",
             },
+        },
+    ],
+});
+
+mods.addRule({
+    description: "disable single quote button as it is too close to enter",
+    manipulators: [
+        {
+            type: "basic",
+            from: {
+                key_code: "backslash",
+            },
+            // to: [
+            //     {
+            //         key_code: "escape",
+            //     },
+            // ],
         },
     ],
 });
