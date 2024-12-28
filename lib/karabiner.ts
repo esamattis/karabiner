@@ -197,6 +197,7 @@ export interface Manipulator {
     to_if_alone?: KeyPressTo[];
     to_after_key_up?: KeyPressTo[];
     to_if_held_down?: KeyPressTo[];
+    parameters?: { "basic.to_if_alone_timeout_milliseconds"?: 200 };
 
     /**
      * https://karabiner-elements.pqrs.org/docs/json/complex-modifications-manipulator-definition/to-delayed-action/
@@ -297,12 +298,11 @@ export class KarabinerComplexModifications {
             return profile.name === profileName;
         });
 
-        const availableProfiles =
-            config?.profiles
-                ?.map((profile) => {
-                    return `"${profile.name}"`;
-                })
-                .join(", ") ?? "No profiles available";
+        const availableProfiles = config?.profiles
+            ?.map((profile) => {
+                return `"${profile.name}"`;
+            })
+            .join(", ") ?? "No profiles available";
 
         if (!profile) {
             throw new Error(

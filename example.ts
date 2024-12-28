@@ -84,13 +84,23 @@ const hyper2 = new HyperKey({
 //     },
 // });
 
-hyper2.bindKey({
+hyper1.bindKey({
     symbol: "@",
     description: "At sign",
     key: "a",
     to: {
         key_code: "2",
         modifiers: ["right_option"],
+    },
+});
+
+hyper1.bindKey({
+    symbol: "@",
+    description: "EUR Symbol €",
+    key: "e",
+    to: {
+        key_code: "4",
+        modifiers: ["right_shift"],
     },
 });
 
@@ -371,10 +381,30 @@ hyper2
         },
     });
 
+// hyper2.bindKey({
+//     symbol: "[",
+//     description: "open square bracket",
+//     key: "3",
+//     to: {
+//         key_code: "8",
+//         modifiers: ["right_option"],
+//     },
+// });
+
+// hyper2.bindKey({
+//     symbol: "]",
+//     description: "close square bracket",
+//     key: "4",
+//     to: {
+//         key_code: "9",
+//         modifiers: ["right_option"],
+//     },
+// });
+
 hyper2.bindKey({
     symbol: "[",
-    description: "open square bracket",
-    key: "3",
+    description: "open square bracket (alt)",
+    key: "a",
     to: {
         key_code: "8",
         modifiers: ["right_option"],
@@ -383,8 +413,8 @@ hyper2.bindKey({
 
 hyper2.bindKey({
     symbol: "]",
-    description: "close square bracket",
-    key: "4",
+    description: "close square bracket (alt",
+    key: "s",
     to: {
         key_code: "9",
         modifiers: ["right_option"],
@@ -552,30 +582,30 @@ hyper2.bindKey({
     ],
 });
 
-const SpectacleKeys: Key[] = [
-    "1",
-    "2",
-    "q",
-    "w",
-    "e",
-    "a",
-    "s",
-    "d",
-    "z",
-    "x",
-    "c",
-];
+// const SpectacleKeys: Key[] = [
+//     "1",
+//     "2",
+//     "q",
+//     "w",
+//     "e",
+//     "a",
+//     "s",
+//     "d",
+//     "z",
+//     "x",
+//     "c",
+// ];
 
-SpectacleKeys.forEach((key) => {
-    hyper1.bindKey({
-        description: "Spectacle " + key,
-        key: key,
-        to: {
-            key_code: key,
-            modifiers: ["left_control", "left_option", "left_command"],
-        },
-    });
-});
+// SpectacleKeys.forEach((key) => {
+//     hyper1.bindKey({
+//         description: "Spectacle " + key,
+//         key: key,
+//         to: {
+//             key_code: key,
+//             modifiers: ["left_control", "left_option", "left_command"],
+//         },
+//     });
+// });
 
 const mods = new KarabinerComplexModifications();
 
@@ -995,6 +1025,50 @@ mods.addRule({
         },
     ],
 });
+
+// mods.addRule({
+//     description: "mod tap m",
+//     manipulators: [
+//         {
+//             type: "basic",
+//             from: {
+//                 key_code: "m",
+//                 modifiers: { "optional": ["any"] },
+//             },
+//             to: [
+//                 {
+//                     key_code: "right_command",
+//                     lazy: true,
+//                 },
+//             ],
+//             "to_if_alone": [
+//                 {
+//                     "key_code": "m",
+//                     "halt": true,
+//                 },
+//             ],
+//             "to_delayed_action": {
+//                 "to_if_canceled": [
+//                     {
+//                         "key_code": "m",
+//                     },
+//                 ],
+//             },
+//             "to_if_held_down": [
+//                 {
+//                     "key_code": "right_command",
+//                     "repeat": false,
+//                     "halt": true,
+//                 },
+//             ],
+
+//             parameters: {
+//                 "basic.to_if_alone_timeout_milliseconds": 200,
+//                 // "basic.simultaneus_threshold_milliseconds": 250,
+//             },
+//         },
+//     ],
+// });
 
 if (Deno.env.get("GH_PAGES")) {
     writeHyperKeyImage({
