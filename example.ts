@@ -12,6 +12,22 @@ import {
 //     HyperKey,
 //     KarabinerComplexModifications,
 // } from "https://deno.land/x/karabiner@v0.1.1/karabiner.ts";
+//
+const SUPER_MOD: Key[] = [
+    "left_shift",
+    "left_control",
+    "left_command",
+    "left_option",
+];
+
+const HYPER: KeyPressTo = {
+    key_code: "left_shift",
+    modifiers: [
+        "left_control",
+        "left_command",
+        "left_option",
+    ],
+};
 
 const WhenRDS: AltCondition = {
     enable: [
@@ -60,13 +76,13 @@ const hyper2 = new HyperKey({
     },
 });
 
-const hyper3 = new HyperKey({
-    id: "hyper3",
-    description: "<> key",
-    from: {
-        key_code: "grave_accent_and_tilde",
-    },
-});
+// const hyper3 = new HyperKey({
+//     id: "hyper3",
+//     description: "<> key",
+//     from: {
+//         key_code: "grave_accent_and_tilde",
+//     },
+// });
 
 hyper2.bindKey({
     symbol: "@",
@@ -131,11 +147,66 @@ hyper1.bindKey({
 });
 
 hyper1.bindKey({
-    symbol: ":",
-    description: "colon",
+    symbol: "^",
+    description: "caret",
     key: "m",
+    to: [
+        {
+            key_code: "close_bracket",
+            modifiers: ["left_shift"],
+        },
+        {
+            key_code: "spacebar",
+        },
+    ],
+});
+
+hyper1.bindKey({
+    symbol: "*",
+    description: "asterisk",
+    key: "semicolon",
     to: {
-        key_code: "period",
+        key_code: "backslash",
+        modifiers: ["left_shift"],
+    },
+});
+
+hyper1.bindKey({
+    symbol: "#",
+    description: "hash",
+    key: "p",
+    to: {
+        key_code: "3",
+        modifiers: ["left_shift"],
+    },
+});
+
+hyper1.bindKey({
+    symbol: "&",
+    description: "and",
+    key: "period",
+    to: {
+        key_code: "6",
+        modifiers: ["left_shift"],
+    },
+});
+
+hyper1.bindKey({
+    symbol: "!",
+    description: "exclamation mark",
+    key: "o",
+    to: {
+        key_code: "1",
+        modifiers: ["left_shift"],
+    },
+});
+
+hyper1.bindKey({
+    symbol: "%",
+    description: "percent",
+    key: "comma",
+    to: {
+        key_code: "5",
         modifiers: ["left_shift"],
     },
 });
@@ -228,7 +299,7 @@ hyper1.bindKey({
 });
 
 hyper1.bindKey({
-    description: "4 backspaces",
+    description: "backspace",
     key: "delete_or_backspace",
     to: [
         {
@@ -508,29 +579,29 @@ SpectacleKeys.forEach((key) => {
 
 const mods = new KarabinerComplexModifications();
 
-mods.addRule({
-    description: "Map command to left option",
-    manipulators: [
-        {
-            type: "basic",
-            from: {
-                key_code: "left_option",
-            },
-            to: [
-                {
-                    key_code: "left_command",
-                    modifiers: ["left_shift"],
-                },
-            ],
-            conditions: [
-                {
-                    type: "frontmost_application_if",
-                    bundle_identifiers: ["^com.neovide.neovide"],
-                },
-            ],
-        },
-    ],
-});
+// mods.addRule({
+//     description: "Map command to left option",
+//     manipulators: [
+//         {
+//             type: "basic",
+//             from: {
+//                 key_code: "left_option",
+//             },
+//             to: [
+//                 {
+//                     key_code: "left_command",
+//                     modifiers: ["left_shift"],
+//                 },
+//             ],
+//             conditions: [
+//                 {
+//                     type: "frontmost_application_if",
+//                     bundle_identifiers: ["^com.neovide.neovide"],
+//                 },
+//             ],
+//         },
+//     ],
+// });
 
 mods.addRule({
     description: "Disable confusing backtic button as standalone",
@@ -709,33 +780,47 @@ mods.addRule({
     ],
 });
 
-// mods.addRule({
-//     description: "Turn section key to escape",
-//     manipulators: [
-//         {
-//             type: "basic",
-//             from: {
-//                 key_code: "non_us_backslash",
-//                 modifiers: {
-//                     optional: ["any"],
-//                 },
-//             },
-//             to: [
-//                 {
-//                     key_code: "escape",
-//                 },
-//             ],
-//         },
-//     ],
-// });
+mods.addRule({
+    description: "Turn section key to super key",
+    manipulators: [
+        {
+            type: "basic",
+            from: {
+                key_code: "non_us_backslash",
+                modifiers: {
+                    optional: ["any"],
+                },
+            },
+            to: [HYPER],
+        },
+    ],
+});
+
+mods.addRule({
+    description: "",
+    manipulators: [
+        {
+            type: "basic",
+            from: {
+                key_code: "grave_accent_and_tilde",
+                modifiers: {
+                    optional: ["any"],
+                },
+            },
+            to: [HYPER],
+        },
+    ],
+});
 
 const UNMUTE: KeyPressTo = {
-    shell_command: `osascript -e 'display notification "🔊 🔴 UNMUTED" sound name "pop"' -e 'delay 0.25' -e 'set volume input volume 70'`,
+    shell_command:
+        `osascript -e 'display notification "🔊 🔴 UNMUTED" sound name "pop"' -e 'delay 0.25' -e 'set volume input volume 70'`,
     // shell_command: `echo unmute >> ~/mute.log`,
 };
 
 const MUTE: KeyPressTo = {
-    shell_command: `osascript -e 'set volume input volume 0' -e 'delay 0.25' -e 'display notification "🔇 muted" sound name "frog"'`,
+    shell_command:
+        `osascript -e 'set volume input volume 0' -e 'delay 0.25' -e 'display notification "🔇 muted" sound name "frog"'`,
     // shell_command: `echo mute >> ~/mute.log`,
 };
 
@@ -796,47 +881,45 @@ mods.addRule({
 //     },
 // });
 
-const SUPER_MOD: Key[] = ["left_control", "left_command", "left_option"];
+// hyper3.bindKey({
+//     symbol: `1pw`,
+//     description: "1password",
+//     key: "1",
+//     to: {
+//         key_code: "1",
+//         modifiers: SUPER_MOD,
+//     },
+// });
 
-hyper3.bindKey({
-    symbol: `1pw`,
-    description: "1password",
-    key: "1",
-    to: {
-        key_code: "1",
-        modifiers: SUPER_MOD,
-    },
-});
+// hyper3.bindKey({
+//     symbol: `1pw`,
+//     description: "1password",
+//     key: "2",
+//     to: {
+//         key_code: "2",
+//         modifiers: SUPER_MOD,
+//     },
+// });
 
-hyper3.bindKey({
-    symbol: `1pw`,
-    description: "1password",
-    key: "2",
-    to: {
-        key_code: "2",
-        modifiers: SUPER_MOD,
-    },
-});
+// hyper3.bindKey({
+//     symbol: `toggl`,
+//     description: "Toggl",
+//     key: "t",
+//     to: {
+//         key_code: "t",
+//         modifiers: SUPER_MOD,
+//     },
+// });
 
-hyper3.bindKey({
-    symbol: `toggl`,
-    description: "Toggl",
-    key: "t",
-    to: {
-        key_code: "t",
-        modifiers: SUPER_MOD,
-    },
-});
-
-hyper3.bindKey({
-    symbol: "Screenshot",
-    description: "Toggl",
-    key: "z",
-    to: {
-        key_code: "z",
-        modifiers: SUPER_MOD,
-    },
-});
+// hyper3.bindKey({
+//     symbol: "Screenshot",
+//     description: "Toggl",
+//     key: "z",
+//     to: {
+//         key_code: "z",
+//         modifiers: SUPER_MOD,
+//     },
+// });
 
 // hyper3.bindKey({
 //     symbol: "Voice Over",
@@ -850,20 +933,23 @@ hyper3.bindKey({
 
 mods.addRule(hyper1.getRules());
 mods.addRule(hyper2.getRules());
-mods.addRule(hyper3.getRules());
+// mods.addRule(hyper3.getRules());
 
 mods.addRule({
-    description: "fn to left option",
+    description: "fn to left control",
     manipulators: [
         {
             type: "basic",
             from: {
                 // key_code: "caps_lock",
                 apple_vendor_top_case_key_code: "keyboard_fn",
+                modifiers: {
+                    optional: ["any"],
+                },
             },
             to: [
                 {
-                    key_code: "left_option",
+                    key_code: "left_control",
                 },
             ],
         },
@@ -877,6 +963,9 @@ mods.addRule({
             type: "basic",
             from: {
                 key_code: "left_control",
+                modifiers: {
+                    optional: ["any"],
+                },
             },
             to: [
                 {
@@ -894,6 +983,9 @@ mods.addRule({
             type: "basic",
             from: {
                 key_code: "caps_lock",
+                modifiers: {
+                    optional: ["any"],
+                },
             },
             to: [
                 {
